@@ -5,7 +5,3 @@ GameManager::GameManager()
 
 }
 
-GameManager::~GameManager()
-{
-
-}

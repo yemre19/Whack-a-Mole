@@ -5,7 +5,5 @@ ScoreManager::ScoreManager()
 
 }
 
-ScoreManager::~ScoreManager()
-{
 
-}
+

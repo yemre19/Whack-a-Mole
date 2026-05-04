@@ -5,7 +5,3 @@ Target::Target()
 
 }
 
-Target::~Target()
-{
-
-}
