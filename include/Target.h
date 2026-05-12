@@ -1,16 +1,27 @@
-#ifndef TARGET_H
-#define TARGET_H
-
 #pragma once
+#include <SDL2/SDL.h>
 
 class Target
 {
 public:
-    Target();
-    ~Target();
+    Target(int x,int y,int boyut,int deger,bool durum,SDL_Texture* doku);
+
+    void ciz(SDL_Renderer* renderer);
+    bool tiklandiMi(int mouseX,int mouseY);
+
+    bool getDurum();
+    int getDeger();
+    void setDurum(bool yeniDurum);
+
+    
 
 private:
+int x;
+int y;
+ int boyut;
+ bool durum;
+ int deger;
+ SDL_Texture* doku;
 
 };
 
-#endif

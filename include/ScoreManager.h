@@ -7,7 +7,7 @@ class ScoreManager
 {
 public:
     ScoreManager();
-    ~ScoreManager();
+    
 
 private:
 
