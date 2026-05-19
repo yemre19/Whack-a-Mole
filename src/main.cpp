@@ -2,10 +2,11 @@
 #include <iostream>
 #include <SDL2/SDL_image.h>
 #include "Target.h"
+#include <vector>
 
 using namespace std;
 
-
+// Yapay zekadan destek alinarak SDL2 kutuphanesi eklendi.
 int main(int argc, char* argv[]) {
     
     cout << "Karanlik tema refleks oyunu basliyor..." << endl;
@@ -28,8 +29,24 @@ int main(int argc, char* argv[]) {
 
     SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/arkaplan.png");
     if (arkaplanDokusu == nullptr) {
-        cout << "Arka plan yuklenemedi! Hata: " << IMG_GetError() << endl;
+        cout << "Arka plan yuklenemedi Hata: " << IMG_GetError() << endl;
     }
+
+    SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/nesneyuvasi.png");
+    if (nesneYuvasi== nullptr)
+    {
+        cout << "Portal resmi yuklenmedi Hata: " << IMG_GetError() << endl;
+    }
+     
+    vector<SDL_Rect> portallar = {
+        {150, 150, 200, 200},
+        {350, 150, 200, 200},
+        {550, 150, 200, 200},
+        {150, 350, 200, 200},
+        {350, 350, 200, 200},
+        {550, 350, 200, 200}
+    };
+
 
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255); 
     SDL_RenderClear(renderer); 
@@ -52,12 +69,19 @@ int main(int argc, char* argv[]) {
     SDL_RenderClear(renderer); 
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
 
+    for (const SDL_Rect& portal : portallar)
+    {
+        SDL_RenderCopy(renderer, nesneYuvasi ,nullptr, &portal);
+    }
+    
+
     SDL_RenderPresent(renderer);
     }
     
     
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_DestroyTexture(nesneYuvasi);
     IMG_Quit(); 
     SDL_Quit();
 
