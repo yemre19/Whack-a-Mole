@@ -23,6 +23,9 @@ int main(int argc, char* argv[]) {
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    bool oyunCalisiyor = true;
+    SDL_Event etkinlik;
+
     SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/arkaplan.png");
     if (arkaplanDokusu == nullptr) {
         cout << "Arka plan yuklenemedi! Hata: " << IMG_GetError() << endl;
@@ -33,13 +36,26 @@ int main(int argc, char* argv[]) {
 
     
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
+
+
+    while (oyunCalisiyor)
+    {
+        while (SDL_PollEvent(&etkinlik))
+        {
+            if (etkinlik.type==SDL_QUIT)
+            {
+                oyunCalisiyor=false;
+            }
+            
+        }
+    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255); 
+    SDL_RenderClear(renderer); 
+    SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
+
     SDL_RenderPresent(renderer);
+    }
     
-   
-
-    cout << "Hedef ekranda! 5 saniye sonra kapanacak..." << endl;
-    SDL_Delay(5000);
-
+    
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit(); 
