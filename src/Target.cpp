@@ -44,4 +44,10 @@ void Target::setDurum(bool yeniDurum)
  this->durum=yeniDurum;
 }
 
+void Target::setKonum(int yeniX,int yeniY)
+{
+   this->x=yeniX;
+   this->y=yeniY;
+}
+
 
