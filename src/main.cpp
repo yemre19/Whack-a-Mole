@@ -20,9 +20,10 @@ int main(int argc, char* argv[]) {
 
     SDL_Window* window = SDL_CreateWindow("Reflex Aim Trainer", 
                                           SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-                                          800, 600, SDL_WINDOW_SHOWN);
+                                          800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_RenderSetLogicalSize(renderer, 800, 600);
 
     bool oyunCalisiyor = true;
     SDL_Event etkinlik;
@@ -39,12 +40,9 @@ int main(int argc, char* argv[]) {
     }
      
     vector<SDL_Rect> portallar = {
-        {150, 150, 200, 200},
-        {350, 150, 200, 200},
-        {550, 150, 200, 200},
-        {150, 350, 200, 200},
-        {350, 350, 200, 200},
-        {550, 350, 200, 200}
+        {140, 100, 120, 120}, {340, 100, 120, 120}, {540, 100, 120, 120}, 
+        {140, 270, 120, 120}, {340, 270, 120, 120}, {540, 270, 120, 120}, 
+        {140, 440, 120, 120}, {340, 440, 120, 120}, {540, 440, 120, 120}
     };
 
 
