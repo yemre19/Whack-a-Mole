@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include "Target.h"
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
