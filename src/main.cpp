@@ -10,6 +10,8 @@ using namespace std;
 
 // Yapay zekadan destek alinarak SDL2 kutuphanesi eklendi.
 int main(int argc, char* argv[]) {
+
+    srand(time(0));
     
     cout << "Karanlik tema refleks oyunu basliyor..." << endl;
     
@@ -40,6 +42,15 @@ int main(int argc, char* argv[]) {
     {
         cout << "Portal resmi yuklenmedi Hata: " << IMG_GetError() << endl;
     }
+
+    SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/nesne-Photoroom.png");
+    if (nesne == nullptr)
+    {
+        cout << "Nesne resmi yuklenmedi Hata: " << IMG_GetError() << endl;
+    }
+
+    Target hedef(0,0,150,10,false,nesne);
+    
      
     vector<SDL_Rect> portallar = {
         {320, 85, 150, 150}, {565, 85, 150, 150}, {810, 85, 150, 150},
@@ -53,6 +64,13 @@ int main(int argc, char* argv[]) {
 
     
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
+
+
+    int rastgele = rand() % 9;
+
+    hedef.setKonum(portallar[rastgele].x, portallar[rastgele].y);
+    hedef.setDurum(true);
+
 
 
     while (oyunCalisiyor)
@@ -73,6 +91,7 @@ int main(int argc, char* argv[]) {
     {
         SDL_RenderCopy(renderer, nesneYuvasi ,nullptr, &portal);
     }
+    hedef.ciz(renderer);
     
 
     SDL_RenderPresent(renderer);
@@ -82,6 +101,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_DestroyTexture(nesneYuvasi);
+    SDL_DestroyTexture(nesne);
     IMG_Quit(); 
     SDL_Quit();
 
