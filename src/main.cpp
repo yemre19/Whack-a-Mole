@@ -68,7 +68,8 @@ int main(int argc, char* argv[]) {
 
     int rastgele = rand() % 9;
 
-    hedef.setKonum(portallar[rastgele].x, portallar[rastgele].y);
+    int baslangicY= portallar[rastgele].y + portallar[rastgele].h;
+    hedef.setKonum(portallar[rastgele].x, baslangicY);
     hedef.setDurum(true);
 
 
