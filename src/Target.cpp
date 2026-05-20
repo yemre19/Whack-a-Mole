@@ -10,12 +10,16 @@ Target::Target(int x,int y,int boyut,int deger,bool durum,SDL_Texture* doku)
    this->doku=doku;
 }
 
-void Target::ciz(SDL_Renderer* renderer)
+void Target::ciz(SDL_Renderer* renderer, SDL_Rect portalKutusu)
 {
     if (!durum) return;
+    
+    SDL_RenderSetClipRect(renderer, &portalKutusu);
 
     SDL_Rect hedefKutusu = {x, y, boyut, boyut};
-    SDL_RenderCopy(renderer, doku, nullptr, &hedefKutusu);
+    SDL_RenderCopy(renderer, doku, nullptr, &hedefKutusu); 
+
+    SDL_RenderSetClipRect(renderer,nullptr);
 }
 
 bool Target::tiklandiMi(int mouseX,int mouseY)
@@ -40,7 +44,7 @@ return this->deger;
 
 }
 void Target::setDurum(bool yeniDurum)
-{
+{ 
  this->durum=yeniDurum;
 }
 
