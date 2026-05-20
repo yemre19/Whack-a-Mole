@@ -93,6 +93,8 @@ int main(int argc, char* argv[]) {
         SDL_RenderCopy(renderer, nesneYuvasi ,nullptr, &portal);
     }
     hedef.ciz(renderer, portallar[rastgele]);
+
+    
     
 
     SDL_RenderPresent(renderer);

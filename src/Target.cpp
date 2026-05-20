@@ -34,6 +34,11 @@ bool Target::tiklandiMi(int mouseX,int mouseY)
   
 }
 
+int Target::getY()
+{
+   return this-> y;
+}
+
 bool Target::getDurum()
 {
  return this->durum;
