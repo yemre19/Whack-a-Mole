@@ -95,7 +95,10 @@ int main(int argc, char* argv[]) {
     hedef.ciz(renderer, portallar[rastgele]);
 
     
-    
+    if (hedef.getDurum() == true && hedef.getY() > portallar[rastgele].y)
+    {
+        hedef.setKonum(portallar[rastgele].x,hedef.getY() -5 );
+    }
 
     SDL_RenderPresent(renderer);
     }
