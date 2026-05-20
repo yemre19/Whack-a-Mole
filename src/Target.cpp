@@ -14,7 +14,10 @@ void Target::ciz(SDL_Renderer* renderer, SDL_Rect portalKutusu)
 {
     if (!durum) return;
     
-    SDL_RenderSetClipRect(renderer, &portalKutusu);
+    SDL_Rect makasAlan = portalKutusu;
+    makasAlan.h = portalKutusu.h / 2; 
+
+    SDL_RenderSetClipRect(renderer, &makasAlan);
 
     SDL_Rect hedefKutusu = {x, y, boyut, boyut};
     SDL_RenderCopy(renderer, doku, nullptr, &hedefKutusu); 
