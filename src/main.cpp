@@ -83,6 +83,23 @@ int main(int argc, char* argv[]) {
                 oyunCalisiyor=false;
             }
             
+            if (etkinlik.type == SDL_MOUSEBUTTONDOWN)
+            {
+                if (etkinlik.button.button == SDL_BUTTON_LEFT)
+                {
+                    int mouseX = etkinlik.button.x;
+                    int mouseY = etkinlik.button.y;
+
+                    if (hedef.tiklandiMi(mouseX,mouseY))
+                    {
+                        hedef.setDurum(false);
+                        cout << "Hedef vuruldu" << endl;
+                    }
+                    
+                }
+                
+            }
+            
         }
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255); 
     SDL_RenderClear(renderer); 
