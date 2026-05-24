@@ -15,7 +15,9 @@ void Target::ciz(SDL_Renderer* renderer, SDL_Rect portalKutusu)
     if (!durum) return;
     
     SDL_Rect makasAlan = portalKutusu;
-    makasAlan.h = portalKutusu.h / 2; 
+    int asagikaydir=20;
+    makasAlan.y += asagikaydir;
+    makasAlan.h = (portalKutusu.h/2) - asagikaydir;
 
     SDL_RenderSetClipRect(renderer, &makasAlan);
 
