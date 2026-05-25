@@ -9,6 +9,8 @@
 #include "ScoreManager.h"
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include "GameManager.h"
+
 
 using namespace std;
 
