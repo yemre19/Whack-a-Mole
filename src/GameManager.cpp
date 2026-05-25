@@ -62,7 +62,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         }
         if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
-            if (etkinlik.type=SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_SPACE)
+            if (etkinlik.type==SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_SPACE)
             {
                 //test amacli space tusuna basinca 30 saniyelik 2.zorlukta oyunu baslatsi
                     baslat(30,2);
