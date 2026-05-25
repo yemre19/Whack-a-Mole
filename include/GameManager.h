@@ -22,7 +22,7 @@ public:
     GameManager();
 
     void baslat(int secilenSure, int zorlukSecimi);
-    void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan , SDL_Texture* portalResmi,Target& hedef, TTF_Font* font);
+    void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi, Target& hedef, TTF_Font* font, const vector<SDL_Rect>& portallar);
     void etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor, Target& hedef, const vector<SDL_Rect>& portallar);
     void guncelle(const vector<SDL_Rect>& portallar, Target& hedef);
 
