@@ -23,7 +23,7 @@ OyunDurumu GameManager::getDurum()
 
 void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
 {
- secilenSure = sureSecimiSaniye * 100;
+ secilenSure = sureSecimiSaniye * 1000;
 
  if (zorlukSecimi == 1)
  {
@@ -45,8 +45,9 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
  
 
  mevcutDurum = OyunDurumu::OYUN_ICI;
- oyunTimer.baslat();
- spawnTimer.baslat();
+ oyunBaslangicZamani = SDL_GetTicks();
+ sonSpawnZamani = SDL_GetTicks();
+
 }
 
 
@@ -60,14 +61,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         }
         if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
-            if (etkinlik.type=SDL_KEYDOWN)
+            if (etkinlik.type=SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_SPACE)
             {
-                //test amacli space tusuna basinca 30 saniyelik 2.zorlukta oyunu baslatsin
-                if (etkinlik.key.keysym.sym == SDLK_SPACE)
-                {
+                //test amacli space tusuna basinca 30 saniyelik 2.zorlukta oyunu baslatsi
                     baslat(30,2);
-                }
-                
+                    hedef.setDurum(false);
             }
 
             
@@ -115,19 +113,22 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
          {
             return;
          }
-         if (oyunTimer.gecenSure() >= secilenSure)
+
+         Uint32 suankiZaman = SDL_GetTicks();
+
+         if (suankiZaman - oyunBaslangicZamani >= secilenSure)
          {
-            mevcutDurum = OyunDurumu::OYUN_SONU;
+            mevcutDurum=OyunDurumu::OYUN_SONU;
             return;
          }
-
-         if (!hedef.getDurum() || spawnTimer.gecenSure() > secilenSpawnSuresi)
+         
+         if (!hedef.getDurum() || (suankiZaman - sonSpawnZamani > secilenSpawnSuresi))
          {
-            aktifPortal = rand() % portallar.size();
+            aktifPortal = rand() %  portallar.size();
             int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h/2);
             hedef.setKonum(portallar[aktifPortal].x,baslangicY);
             hedef.setDurum(true);
-            spawnTimer.baslat();
+            sonSpawnZamani= suankiZaman;
          }
          
          if (hedef.getDurum() && hedef.getY() > portallar[aktifPortal].y)
@@ -163,7 +164,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
         string skorMetni = "Skor: " + to_string(skorYoneticisi.getSkor());
         
-        int kalanSaniye = (secilenSure - oyunTimer.gecenSure()) / 1000;
+        int kalanSaniye = (secilenSure - (SDL_GetTicks() - oyunBaslangicZamani)) / 1000;
         if (kalanSaniye < 0) kalanSaniye = 0;
         string sureMetni = "Sure: " + to_string(kalanSaniye);
 

@@ -34,8 +34,8 @@ public:
 private:
  OyunDurumu mevcutDurum;
  ScoreManager skorYoneticisi;
- Timer oyunTimer;
- Timer spawnTimer;
+ Uint32 oyunBaslangicZamani;
+ Uint32 sonSpawnZamani;
 
  int secilenSure;
  int secilenHiz;

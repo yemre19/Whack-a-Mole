@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
     while (oyunCalisiyor)
     {
-        while (SDL_PollEvent(&etkinlik))
+        
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
