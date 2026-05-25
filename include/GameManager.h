@@ -18,9 +18,25 @@ class GameManager
 {
 public:
     GameManager();
+
+    void baslat(int secilenSure, int zorlukSecimi);
+    void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan , SDL_Textur* portalResmi,Target& hedef, TTF_Font* font);
+
+    OyunDurumu getDurum();
+    void setDurum(OyunDurumu yeniDurum);
+    
     
 
 private:
+ OyunDurumu mevcutDurum;
+ ScoreManager skorYoneticisi;
+ Timer oyunTimer;
+ Timer spawnTimer;
+
+ int secilenSure;
+ int secilenHiz;
+ int secilenSpawnSuresi;
+ int aktifPortal;
 
 };
 
