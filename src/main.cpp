@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
             
         }
 
-        if (hedef.getDurum() == false || spawnTimer.gecenSure() > 2000)
+        if (hedef.getDurum() == false || spawnTimer.gecenSure() > 500)
         {
             rastgele = rand() % 9;
             baslangicY = portallar[rastgele].y + (portallar[rastgele].h/2);
