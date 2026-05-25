@@ -5,7 +5,6 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include "Timer.h"
 #include "ScoreManager.h"
 #include <SDL2/SDL_ttf.h>
 #include <string>
