@@ -47,6 +47,7 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
  mevcutDurum = OyunDurumu::OYUN_ICI;
  oyunBaslangicZamani = SDL_GetTicks();
  sonSpawnZamani = SDL_GetTicks();
+ skorYoneticisi.sifirla();
 
 }
 
