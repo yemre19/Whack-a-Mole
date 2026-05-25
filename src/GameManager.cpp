@@ -48,3 +48,43 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
  oyunTimer.baslat();
  spawnTimer.baslat();
 }
+
+
+void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
+    {
+      while (SDL_PollEvent(&etkinlik))
+      {
+        if (etkinlik.type ==SDL_QUIT)
+        {
+            oyunCalisiyor=false;
+        }
+        if (mevcutDurum== OyunDurumu::ANA_MENU)
+        {
+            if (etkinlik.type=SDL_KEYDOWN)
+            {
+                //test amacli space tusuna basinca 30 saniyelik 2.zorlukta oyunu baslatsin
+                if (etkinlik.key.keysym.sym == SDLK_SPACE)
+                {
+                    baslat(30,2);
+                }
+                
+            }
+            
+        }else if (mevcutDurum == OyunDurumu::OYUN_SONU)
+        {
+            if (etkinlik.type == SDL_KEYDOWN)
+            {
+                if (etkinlik.key.keysym.sym=SDLK_r)
+                {
+                    //r ye basinca ana menute donsun
+                    mevcutDurum = OyunDurumu::ANA_MENU;
+                }
+                
+            }
+            
+        }
+        
+        
+      }
+      
+    }
