@@ -8,6 +8,7 @@
 #include "Timer.h"
 #include "ScoreManager.h"
 #include <SDL2/SDL_ttf.h>
+#include <string>
 
 using namespace std;
 
@@ -22,6 +23,20 @@ int main(int argc, char* argv[]) {
         cout << "Oyun motoru baslatilamadi! Hata: " << SDL_GetError() << endl;
         return -1;
     }
+
+    if (TTF_Init()== -1)
+    {
+        cout << "TTF baslatilamadi Hata: " << TTF_GetError() << endl ;
+        return -1;
+    }
+
+    TTF_Font* oyunFontu = TTF_OpenFont("assets/font.otf",28 );
+    if (oyunFontu = nullptr)
+    {
+      cout << "Font yuklenemedi Hata: " << TTF_GetError() << endl ;
+    }
+    
+    
 
     IMG_Init(IMG_INIT_PNG);
 
@@ -65,6 +80,8 @@ int main(int argc, char* argv[]) {
 
     
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
+
+
 
 
     int rastgele = rand() % 9;
@@ -128,6 +145,20 @@ int main(int argc, char* argv[]) {
     SDL_RenderClear(renderer); 
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
 
+    string skorMetni= "Skor: " + to_string(skorYoneticisi.getSkor());
+    SDL_Color yaziRengfi: {255,255,255,255};
+    SDL_Surface* yaziYuzeyi = TTF_RenderText_Solid(oyunFontu, skorMetni.c_str(), yaziRengfi);
+    SDL_Texture* yaziDokusu = SDL_CreateTextureFromSurface(renderer, yaziYuzeyi);
+    SDL_Rect yaziTablosu;
+    yaziTablosu.x=20;
+    yaziTablosu.y=20;
+    yaziTablosu.w= yaziYuzeyi->w;
+    yaziTablosu.h = yaziYuzeyi->h;
+
+    SDL_RenderCopy(renderer, yaziDokusu, NULL , &yaziTablosu);
+    SDL_Surface(yaziYuzeyi);
+    SDL_DestroyTexture(yaziDokusu);
+
     for (const SDL_Rect& portal : portallar)
     {
         SDL_RenderCopy(renderer, nesneYuvasi ,nullptr, &portal);
@@ -149,6 +180,8 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_DestroyTexture(nesneYuvasi);
     SDL_DestroyTexture(nesne);
+    TTF_CloseFont(oyunFontu);
+    TTF_Quit();
     IMG_Quit(); 
     SDL_Quit();
 
