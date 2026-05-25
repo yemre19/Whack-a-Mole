@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     }
 
     TTF_Font* oyunFontu = TTF_OpenFont("assets/font.otf",28 );
-    if (oyunFontu = nullptr)
+    if (oyunFontu == nullptr)
     {
       cout << "Font yuklenemedi Hata: " << TTF_GetError() << endl ;
     }
@@ -146,8 +146,8 @@ int main(int argc, char* argv[]) {
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
 
     string skorMetni= "Skor: " + to_string(skorYoneticisi.getSkor());
-    SDL_Color yaziRengfi: {255,255,255,255};
-    SDL_Surface* yaziYuzeyi = TTF_RenderText_Solid(oyunFontu, skorMetni.c_str(), yaziRengfi);
+    SDL_Color yaziRengi= {255,255,255,255};
+    SDL_Surface* yaziYuzeyi = TTF_RenderText_Solid(oyunFontu, skorMetni.c_str(), yaziRengi);
     SDL_Texture* yaziDokusu = SDL_CreateTextureFromSurface(renderer, yaziYuzeyi);
     SDL_Rect yaziTablosu;
     yaziTablosu.x=20;
@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
     yaziTablosu.h = yaziYuzeyi->h;
 
     SDL_RenderCopy(renderer, yaziDokusu, NULL , &yaziTablosu);
-    SDL_Surface(yaziYuzeyi);
+    SDL_FreeSurface(yaziYuzeyi);
     SDL_DestroyTexture(yaziDokusu);
 
     for (const SDL_Rect& portal : portallar)
@@ -180,10 +180,10 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_DestroyTexture(nesneYuvasi);
     SDL_DestroyTexture(nesne);
-    TTF_CloseFont(oyunFontu);
-    TTF_Quit();
     IMG_Quit(); 
     SDL_Quit();
-
+    TTF_CloseFont(oyunFontu);
+    TTF_Quit();
+    
     return 0;
 }
