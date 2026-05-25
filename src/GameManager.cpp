@@ -144,7 +144,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
     SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
     SDL_Color yaziRengi = {255, 255, 255, 255};
     if (mevcutDurum == OyunDurumu::ANA_MENU) {
-        string menuMetni = "Whack-a-Mole -- BAŞLAMAK İÇİN SPACE'E BASIN";
+        string menuMetni = "Whack-a-Mole -- BASLAMAK ICIN SPACE'E BASIN";
         SDL_Surface* yuzey = TTF_RenderText_Solid(font, menuMetni.c_str(), yaziRengi);
         SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
         
@@ -155,14 +155,34 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_DestroyTexture(doku);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
-        string skorMetni = "SKOR: " + to_string(skorYoneticisi.getSkor());
+        for (const SDL_Rect& portal : portallar)
+        {
+            SDL_RenderCopy(renderer,portalResmi,nullptr,&portal);
+        }
+        hedef.ciz(renderer , portallar[aktifPortal]);
+
+        string skorMetni = "Skor: " + to_string(skorYoneticisi.getSkor());
         
         int kalanSaniye = (secilenSure - oyunTimer.gecenSure()) / 1000;
         if (kalanSaniye < 0) kalanSaniye = 0;
-        string sureMetni = "SÜRE: " + to_string(kalanSaniye);
+        string sureMetni = "Sure: " + to_string(kalanSaniye);
+
+        SDL_Surface* skorYuzey = TTF_RenderText_Solid(font, skorMetni.c_str(), yaziRengi);
+        SDL_Texture* skorDoku = SDL_CreateTextureFromSurface(renderer, skorYuzey);
+        SDL_Rect skorKonum = {20, 20, skorYuzey->w, skorYuzey->h};
+        SDL_RenderCopy(renderer, skorDoku, NULL, &skorKonum);
+        SDL_FreeSurface(skorYuzey);
+        SDL_DestroyTexture(skorDoku);
+
+        SDL_Surface* sureYuzey = TTF_RenderText_Solid(font, sureMetni.c_str(), yaziRengi);
+        SDL_Texture* sureDoku = SDL_CreateTextureFromSurface(renderer, sureYuzey);
+        SDL_Rect sureKonum = {20, 60, sureYuzey->w, sureYuzey->h}; 
+        SDL_RenderCopy(renderer, sureDoku, NULL, &sureKonum);
+        SDL_FreeSurface(sureYuzey);
+        SDL_DestroyTexture(sureDoku);
         
     }else if (mevcutDurum == OyunDurumu::OYUN_SONU) {
-        string sonMetin = "SÜRE BİTTİ! SKORUNUZ: " + to_string(skorYoneticisi.getSkor()) + " - MENÜ İÇİN R'YE BASIN";
+        string sonMetin = "Sure bitti Skor: " + to_string(skorYoneticisi.getSkor()) + " - Menu icin r ye basin";
         SDL_Surface* yuzey = TTF_RenderText_Solid(font, sonMetin.c_str(), yaziRengi);
         SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
         

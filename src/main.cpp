@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,hedef,oyunFontu);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,hedef,oyunFontu,portallar);
             SDL_Delay(16);
         }
     }
