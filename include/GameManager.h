@@ -9,11 +9,11 @@
 #include "ScoreManager.h"
 #include "Timer.h"
 
+using namespace std;
+
 enum class OyunDurumu
 {
-    ANA_MENU,
-    OYUN_ICI,
-    OYUN_SONU
+    ANA_MENU,OYUN_ICI,OYUN_SONU
 };
 
 class GameManager
@@ -22,7 +22,7 @@ public:
     GameManager();
 
     void baslat(int secilenSure, int zorlukSecimi);
-    void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan , SDL_Textur* portalResmi,Target& hedef, TTF_Font* font);
+    void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan , SDL_Texture* portalResmi,Target& hedef, TTF_Font* font);
     void etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor);
     void guncelle(const vector<SDL_Rect>& portallar, Target& hedef);
 
