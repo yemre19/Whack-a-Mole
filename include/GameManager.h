@@ -21,6 +21,8 @@ public:
 
     void baslat(int secilenSure, int zorlukSecimi);
     void ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan , SDL_Textur* portalResmi,Target& hedef, TTF_Font* font);
+    void etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor);
+    void guncelle(const vector<SDL_Rect>& portallar, Target& hedef);
 
     OyunDurumu getDurum();
     void setDurum(OyunDurumu yeniDurum);
