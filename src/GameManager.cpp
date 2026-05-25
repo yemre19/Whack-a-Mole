@@ -80,7 +80,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
                 if (hedef.tiklandiMi(mouseX,mouseY))
                 {
-                   int delikOrtaY = portallar[aktifPortalIndeksi].y + (portallar[aktifPortalIndeksi].h / 2);
+                   int delikOrtaY = portallar[aktifPortal].y + (portallar[aktifPortal].h / 2);
                    if (mouseY < delikOrtaY)
                    {
                     hedef.setDurum(false);
@@ -96,10 +96,10 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         
         else if (mevcutDurum == OyunDurumu::OYUN_SONU)
         {
-            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym=SDLK_r)
+            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_r)
             {
             //r ye basinca ana menute donsun
-           mevcutDurum = OyunDurumu::ANA_MENU;  
+            mevcutDurum = OyunDurumu::ANA_MENU;  
             }
             
         }
