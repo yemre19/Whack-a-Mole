@@ -102,3 +102,32 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
       }
       
     }
+
+    void GameManager::guncelle(const vector<SDL_Rect>& portallar, Target& hedef)
+    {
+         if (mevcutDurum != OyunDurumu::OYUN_ICI)
+         {
+            return;
+         }
+         if (oyunTimer.gecenSure() >= secilenSure)
+         {
+            mevcutDurum = OyunDurumu::OYUN_SONU;
+            return;
+         }
+
+         if (!hedef.getDurum() || spawnTimer.gecenSure() > secilenSpawnSuresi)
+         {
+            aktifPortal = rand() % portallar.size();
+            int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h/2);
+            hedef.setKonum(portallar[aktifPortal].x,baslangicY);
+            hedef.setDurum(true);
+            spawnTimer.baslat();
+         }
+         
+         if (hedef.getDurum() && hedef.getY() > portallar[aktifPortal].y)
+         {
+            hedef.setKonum(portallar[aktifPortal].x, hedef.getY() - secilenHiz);
+         }
+         
+         
+    }
