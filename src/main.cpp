@@ -95,9 +95,15 @@ int main(int argc, char* argv[]) {
 
                     if (hedef.tiklandiMi(mouseX,mouseY))
                     {
-                        hedef.setDurum(false);
-                        skorYoneticisi.puanEkle(10);
-                        cout << "Hedef Vuruldu" << "Mevcut Skor: " << skorYoneticisi.getSkor() << endl ;
+                        int delikOrtaY = portallar[rastgele ].y + (portallar[rastgele].h/2);
+
+                        if (mouseY < delikOrtaY)  
+                        {
+                            hedef.setDurum(false);
+                            skorYoneticisi.puanEkle(10);
+                            cout << "Hedef Vuruldu" << "Mevcut Skor: " << skorYoneticisi.getSkor() << endl ;
+                        }
+                        
 
                     }
                     
