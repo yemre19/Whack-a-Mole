@@ -50,7 +50,7 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
 }
 
 
-void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
+void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor, Target& hedef, const vector<SDL_Rect>& portallar)
     {
       while (SDL_PollEvent(&etkinlik))
       {
@@ -73,10 +73,20 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
             
         }else if (mevcutDurum==OyunDurumu::OYUN_ICI)
         {
-            if (etkinlik.type == SDL_MOUSEBUTTONDOWN)
+            if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
-                if (etkinlik.button.button=SDL_BUTTON_LEFT)
+                int mouseX = etkinlik.button.x;
+                int mouseY = etkinlik.button.y;
+
+                if (hedef.tiklandiMi(mouseX,mouseY))
                 {
+                   int delikOrtaY = portallar[aktifPortalIndeksi].y + (portallar[aktifPortalIndeksi].h / 2);
+                   if (mouseY < delikOrtaY)
+                   {
+                    hedef.setDurum(false);
+                    skorYoneticisi.puanEkle(10);
+                    cout << "Hedef Vuruldu Skor: " << skorYoneticisi.getSkor() << endl; 
+                   }
                    
                 }
                 
@@ -86,14 +96,10 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
         
         else if (mevcutDurum == OyunDurumu::OYUN_SONU)
         {
-            if (etkinlik.type == SDL_KEYDOWN)
+            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym=SDLK_r)
             {
-                if (etkinlik.key.keysym.sym=SDLK_r)
-                {
-                    //r ye basinca ana menute donsun
-                    mevcutDurum = OyunDurumu::ANA_MENU;
-                }
-                
+            //r ye basinca ana menute donsun
+           mevcutDurum = OyunDurumu::ANA_MENU;  
             }
             
         }
