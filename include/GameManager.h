@@ -11,7 +11,9 @@
 
 enum class OyunDurumu
 {
-    ANA MENU,OYUN_ICI,OYUN_SONU
+    ANA_MENU,
+    OYUN_ICI,
+    OYUN_SONU
 };
 
 class GameManager
