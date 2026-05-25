@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
     Timer spawnTimer;
     spawnTimer.baslat();
 
+    ScoreManager skorYoneticisi;
+
     while (oyunCalisiyor)
     {
         while (SDL_PollEvent(&etkinlik))
@@ -94,7 +96,9 @@ int main(int argc, char* argv[]) {
                     if (hedef.tiklandiMi(mouseX,mouseY))
                     {
                         hedef.setDurum(false);
-                        cout << "Hedef vuruldu" << endl;
+                        skorYoneticisi.puanEkle(10);
+                        cout << "Hedef Vuruldu" << "Mevcut Skor: " << skorYoneticisi.getSkor() << endl ;
+
                     }
                     
                 }
