@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include "Timer.h"
 
 using namespace std;
 
@@ -72,7 +73,8 @@ int main(int argc, char* argv[]) {
     hedef.setKonum(portallar[rastgele].x, baslangicY);
     hedef.setDurum(true);
 
-
+    Timer spawnTimer;
+    spawnTimer.baslat();
 
     while (oyunCalisiyor)
     {
@@ -101,6 +103,17 @@ int main(int argc, char* argv[]) {
             }
             
         }
+
+        if (hedef.getDurum() == false || spawnTimer.gecenSure() > 2000)
+        {
+            rastgele = rand() % 9;
+            baslangicY = portallar[rastgele].y + (portallar[rastgele].h/2);
+            hedef.setKonum(portallar[rastgele].x, baslangicY);
+            hedef.setDurum(true);
+            spawnTimer.baslat();
+        }
+        
+
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255); 
     SDL_RenderClear(renderer); 
     SDL_RenderCopy(renderer, arkaplanDokusu, NULL, NULL);
