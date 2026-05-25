@@ -129,5 +129,43 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor)
             hedef.setKonum(portallar[aktifPortal].x, hedef.getY() - secilenHiz);
          }
          
-         
     }
+
+    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi, Target& hedef, TTF_Font* font) {
+    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+    SDL_RenderClear(renderer);
+
+    SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
+    SDL_Color yaziRengi = {255, 255, 255, 255};
+    if (mevcutDurum == OyunDurumu::ANA_MENU) {
+        string menuMetni = "Whack-a-Mole -- BAŞLAMAK İÇİN SPACE'E BASIN";
+        SDL_Surface* yuzey = TTF_RenderText_Solid(font, menuMetni.c_str(), yaziRengi);
+        SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
+        
+        SDL_Rect yaziKonum = { 1280 / 2 - yuzey->w / 2, 720 / 2 - yuzey->h / 2, yuzey->w, yuzey->h };
+        SDL_RenderCopy(renderer, doku, NULL, &yaziKonum);
+        
+        SDL_FreeSurface(yuzey);
+        SDL_DestroyTexture(doku);
+    }
+    else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
+        string skorMetni = "SKOR: " + to_string(skorYoneticisi.getSkor());
+        
+        int kalanSaniye = (secilenSure - oyunTimer.gecenSure()) / 1000;
+        if (kalanSaniye < 0) kalanSaniye = 0;
+        string sureMetni = "SÜRE: " + to_string(kalanSaniye);
+        
+    }else if (mevcutDurum == OyunDurumu::OYUN_SONU) {
+        string sonMetin = "SÜRE BİTTİ! SKORUNUZ: " + to_string(skorYoneticisi.getSkor()) + " - MENÜ İÇİN R'YE BASIN";
+        SDL_Surface* yuzey = TTF_RenderText_Solid(font, sonMetin.c_str(), yaziRengi);
+        SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
+        
+        SDL_Rect yaziKonum = { 1280 / 2 - yuzey->w / 2, 720 / 2 - yuzey->h / 2, yuzey->w, yuzey->h };
+        SDL_RenderCopy(renderer, doku, NULL, &yaziKonum);
+        
+        SDL_FreeSurface(yuzey);
+        SDL_DestroyTexture(doku);
+    }
+
+    SDL_RenderPresent(renderer);
+}
