@@ -9,6 +9,8 @@ GameManager::GameManager()
     secilenHiz=5;
     secilenSpawnSuresi=2000;
     aktifPortal=0;
+    sureSecimi=30;
+    zorlukSecimi=2;
 }
 
 void GameManager::setDurum(OyunDurumu yeniDurum)
@@ -62,11 +64,29 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         }
         if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
-            if (etkinlik.type==SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_SPACE)
+            if (etkinlik.type==SDL_KEYDOWN)
             {
-                //test amacli space tusuna basinca 30 saniyelik 2.zorlukta oyunu baslatsi
-                    baslat(30,2);
+                SDL_Keycode tus = etkinlik.key.keysym.sym;
+                
+
+                if (tus == SDLK_1) 
+                {
+                  sureSecimi=30;
+                }else if (tus == SDLK_2) 
+                {
+                    sureSecimi=60;
+                }else if (tus == SDLK_a) {
+                    zorlukSecimi = 1;
+                }else if (tus == SDLK_s) {
+                    zorlukSecimi = 2;
+                }else if (tus == SDLK_d) {
+                    zorlukSecimi = 3;
+                }
+                
+                else if (tus == SDLK_SPACE) {
+                    baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
+                }
             }
 
             
@@ -146,7 +166,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
     SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
     SDL_Color yaziRengi = {255, 255, 255, 255};
     if (mevcutDurum == OyunDurumu::ANA_MENU) {
-        string menuMetni = "Whack-a-Mole -- BASLAMAK ICIN SPACE'E BASIN";
+        string zorlukMetni;
+        if(zorlukSecimi==1) zorlukMetni= "KOLAY";
+        if(zorlukSecimi==2) zorlukMetni= "ORTA";
+        if(zorlukSecimi==3) zorlukMetni= "XOR";
+        string menuMetni = "SURE: " + to_string(sureSecimi) + "sn (1-2) | ZORLUK: " + zorlukMetni + "[A-S-D] | Whack-a-Mole -- BASLAMAK ICIN SPACE'E BASIN";
         SDL_Surface* yuzey = TTF_RenderText_Solid(font, menuMetni.c_str(), yaziRengi);
         SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
         
