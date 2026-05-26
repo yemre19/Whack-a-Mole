@@ -37,6 +37,9 @@ private:
  Uint32 oyunBaslangicZamani;
  Uint32 sonSpawnZamani;
 
+ int sureSecimi;
+ int zorlukSecimi;
+
  int secilenSure;
  int secilenHiz;
  int secilenSpawnSuresi;
