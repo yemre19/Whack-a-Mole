@@ -146,13 +146,13 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
          if (!hedef.getDurum() || (suankiZaman - sonSpawnZamani > secilenSpawnSuresi))
          {
             aktifPortal = rand() %  portallar.size();
-            int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h/2);
-            hedef.setKonum(portallar[aktifPortal].x,baslangicY);
+            int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h- hedef.getBoyut()/2);
+            hedef.setKonum(portallar[aktifPortal].x + (portallar[aktifPortal].w / 2) - (hedef.getBoyut() / 2),baslangicY);
             hedef.setDurum(true);
             sonSpawnZamani= suankiZaman;
          }
          
-         if (hedef.getDurum() && hedef.getY() > portallar[aktifPortal].y)
+         if (hedef.getDurum() && hedef.getY() > portallar[aktifPortal].y - 100)
          {
             hedef.setKonum(portallar[aktifPortal].x, hedef.getY() - secilenHiz);
          }

@@ -14,6 +14,7 @@ public:
     void setDurum(bool yeniDurum);
     void setKonum(int yeniX, int yeniY);
     int getY();
+    int getBoyut();
 
     
 

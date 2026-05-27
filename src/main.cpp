@@ -48,16 +48,16 @@ int main(int argc, char* argv[])
     SDL_RenderSetLogicalSize(renderer, 1280, 720);
 
     SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/arkaplan.png");
-    SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/nsn.png");
-    SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/nessne.png");
+    SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/image.png");
+    SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/nnessne.png");
 
-    Target hedef(0,0,150,10,false,nesne);
+    Target hedef(0,0,250,10,false,nesne);
     
      
     vector<SDL_Rect> portallar = {
-        {185, 45, 180, 180}, {550, 45, 180, 180}, {915, 45, 180, 180},
-        {185, 270, 180, 180}, {550, 270, 180, 180}, {915, 270, 180, 180},
-        {185, 495, 180, 180}, {550, 495, 180, 180}, {915, 495, 180, 180}
+   {150, 120, 250, 100}, {515, 120, 250, 100}, {880, 120, 250, 100},
+   {150, 320, 250, 100}, {515, 320, 250, 100}, {880, 320, 250, 100},
+   {150, 520, 250, 100}, {515, 520, 250, 100}, {880, 520, 250, 100}
     };
 
     GameManager oyunYoneticisi;

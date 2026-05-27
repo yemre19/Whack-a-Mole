@@ -15,9 +15,10 @@ void Target::ciz(SDL_Renderer* renderer, SDL_Rect portalKutusu)
     if (!durum) return;
     
     SDL_Rect makasAlan = portalKutusu;
-    int asagikaydir=20;
-    makasAlan.y += asagikaydir;
-    makasAlan.h = (portalKutusu.h/2) - asagikaydir;
+    
+    makasAlan.y = 0;
+   makasAlan.h = portalKutusu.y + (portalKutusu.h / 2) + 15;
+
 
     SDL_RenderSetClipRect(renderer, &makasAlan);
 
@@ -37,6 +38,11 @@ bool Target::tiklandiMi(int mouseX,int mouseY)
    return false;
 
   
+}
+
+int Target::getBoyut() 
+{
+    return this-> boyut;
 }
 
 int Target::getY()
