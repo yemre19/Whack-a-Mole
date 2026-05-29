@@ -30,14 +30,21 @@ void Target::ciz(SDL_Renderer* renderer, SDL_Rect portalKutusu)
 
 bool Target::tiklandiMi(int mouseX,int mouseY)
 {
-  if (!durum) return false;
-   if (mouseX >= x && mouseX <= (x + boyut) && mouseY >= y && mouseY <= (y + boyut))
-   {
-    return true;
-   }else
-   return false;
+  int yaricap= boyut/2;
+  int merkezX = x + yaricap;
+  int merkezY = y + yaricap;
 
+  int gercekHitboxYaricapi = yaricap * 0.75;
+
+  int mesafeX = mouseX - merkezX;
+  int mesafeY = mouseY - merkezY;
+ 
+  if ((mesafeX * mesafeX) + (mesafeY * mesafeY) <= (gercekHitboxYaricapi * gercekHitboxYaricapi))
+  {
+   return true;
+  }
   
+  return false;
 }
 
 int Target::getBoyut() 
