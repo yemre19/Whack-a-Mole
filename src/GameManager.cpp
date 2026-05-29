@@ -119,7 +119,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                 int mouseX = etkinlik.button.x;
                 int mouseY = etkinlik.button.y;
 
-                if (hedef.tiklandiMi(mouseX,mouseY))
+                if (hedef.getDurum() == true && hedef.tiklandiMi(mouseX,mouseY))
                 {
                    int delikOrtaY = portallar[aktifPortal].y + (portallar[aktifPortal].h / 2);
                    if (mouseY < delikOrtaY)
