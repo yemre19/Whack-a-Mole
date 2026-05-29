@@ -118,12 +118,19 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
             {
                 int mouseX = etkinlik.button.x;
                 int mouseY = etkinlik.button.y;
+                int delikOrtaY = portallar[aktifPortal].y + (portallar[aktifPortal].h / 2);
 
-                if (hedef.getDurum() == true && hedef.tiklandiMi(mouseX,mouseY))
+                if (hedef.getDurum() == true && hedef.tiklandiMi(mouseX,mouseY) && mouseY < delikOrtaY)
                 {
-                   int delikOrtaY = portallar[aktifPortal].y + (portallar[aktifPortal].h / 2);
-                   if (mouseY < delikOrtaY)
+                   static Uint32 sonVurusZamani = 0;
+                   Uint32 suankiZaman = SDL_GetTicks();
+
+
+
+                   if (suankiZaman - sonVurusZamani > 150)
                    {
+                    sonVurusZamani = suankiZaman;
+                    
                     hedef.setDurum(false);
                     skorYoneticisi.puanEkle(10);
                     cout << "Hedef Vuruldu Skor: " << skorYoneticisi.getSkor() << endl; 
@@ -132,8 +139,12 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                     patlamaY = hedef.getY();
                     patlamaBoyut = hedef.getBoyut();
                     patlamaSeffaf =255;
-
+                
                    }
+                   
+
+
+                   
                    
                 }
                 
