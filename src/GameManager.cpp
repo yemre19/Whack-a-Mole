@@ -6,6 +6,7 @@
 GameManager::GameManager()
 {
     mevcutDurum = OyunDurumu::GIRIS_EKRANI;
+    gecisAnim=255;
     secilenSure=30;
     secilenHiz=5;
     secilenSpawnSuresi=2000;
@@ -72,6 +73,8 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                 if (fareX >= 500 && fareX <=700 && fareY >= 500 && fareY <= 550)
                 {
                     mevcutDurum=OyunDurumu::ANA_MENU;
+                    gecisAnim=250;
+                    
                 }
                 
             }
@@ -96,6 +99,8 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                 }if (fareX >= 500 && fareX <= 780 && fareY >= 550 && fareY <= 600) {
                     baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
+                    gecisAnim=250;
+                    
                 }
             }
             
@@ -121,6 +126,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                 }
                 
             }
+            gecisAnim=250;
             
         }
         
@@ -129,6 +135,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
             if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_r)
             {
             mevcutDurum = OyunDurumu::ANA_MENU;  
+            gecisAnim=250;
             }
             
         }
@@ -247,6 +254,19 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_FreeSurface(yuzey);
         SDL_DestroyTexture(doku);
     }
+
+    if (gecisAnim > 0)
+    {
+        SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer,0,0,0,gecisAnim);
+
+        SDL_Rect tamEkran = {0,0,1280,720};
+        SDL_RenderFillRect(renderer, &tamEkran);
+
+        gecisAnim -=8;
+        if (gecisAnim < 0) gecisAnim = 0;
+    }
+    
 
     SDL_RenderPresent(renderer);
 }

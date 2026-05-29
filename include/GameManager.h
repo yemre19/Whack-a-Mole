@@ -46,6 +46,7 @@ private:
  int secilenHiz;
  int secilenSpawnSuresi;
  int aktifPortal;
+ int gecisAnim;
 
 };
 
