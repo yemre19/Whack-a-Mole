@@ -70,4 +70,8 @@ void Target::setKonum(int yeniX,int yeniY)
    this->y=yeniY;
 }
 
+int Target::getX()
+{
+   return this->x;
+}
 
