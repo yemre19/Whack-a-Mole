@@ -7,6 +7,7 @@
 #include <vector>
 #include "Target.h"
 #include "ScoreManager.h"
+#include <string>
 
 
 using namespace std;
@@ -28,6 +29,7 @@ public:
 
     OyunDurumu getDurum();
     void setDurum(OyunDurumu yeniDurum);
+    void yaziCiz(SDL_Renderer* renderer, TTF_Font* font,string metin, int x, int y, SDL_Color renk);
     
     
 

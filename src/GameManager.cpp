@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+
 GameManager::GameManager()
 {
     mevcutDurum = OyunDurumu::ANA_MENU;
@@ -64,31 +65,26 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         }
         if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
-            if (etkinlik.type==SDL_KEYDOWN)
+           if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
-                SDL_Keycode tus = etkinlik.key.keysym.sym;
-                
+                int fareX = etkinlik.button.x;
+                int fareY = etkinlik.button.y;
 
-                if (tus == SDLK_1) 
-                {
-                  sureSecimi=30;
-                }else if (tus == SDLK_2) 
-                {
-                    sureSecimi=60;
-                }else if (tus == SDLK_a) {
-                    zorlukSecimi = 1;
-                }else if (tus == SDLK_s) {
-                    zorlukSecimi = 2;
-                }else if (tus == SDLK_d) {
-                    zorlukSecimi = 3;
+                if (fareY >= 300 && fareY <= 350) {
+                    if (fareX >= 450 && fareX <= 600) sureSecimi = 30;
+                    else if (fareX >= 680 && fareX <= 830) sureSecimi = 60;
                 }
-                
-                else if (tus == SDLK_SPACE) {
+                if (fareY >= 400 && fareY <= 450) {
+                    if (fareX >= 350 && fareX <= 500) zorlukSecimi = 1;
+                    else if (fareX >= 550 && fareX <= 700) zorlukSecimi = 2;
+                    else if (fareX >= 750 && fareX <= 900) zorlukSecimi = 3;
+                }if (fareX >= 500 && fareX <= 780 && fareY >= 550 && fareY <= 600) {
                     baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
                 }
             }
-
+            
+            
             
         }else if (mevcutDurum==OyunDurumu::OYUN_ICI)
         {
@@ -117,7 +113,6 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         {
             if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_r)
             {
-            //r ye basinca ana menute donsun
             mevcutDurum = OyunDurumu::ANA_MENU;  
             }
             
@@ -159,6 +154,17 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
          
     }
 
+    void GameManager::yaziCiz(SDL_Renderer* renderer, TTF_Font* font, string metin, int x, int y, SDL_Color renk)
+    {
+        SDL_Surface* yuzey = TTF_RenderText_Solid(font, metin.c_str(), renk);
+        SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
+        SDL_Rect konum = { x, y, yuzey->w, yuzey->h };
+        SDL_RenderCopy(renderer, doku, NULL, &konum);
+        SDL_FreeSurface(yuzey);
+        SDL_DestroyTexture(doku);
+
+    }
+
     void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi, Target& hedef, TTF_Font* font, const vector<SDL_Rect>& portallar) {
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
     SDL_RenderClear(renderer);
@@ -166,19 +172,16 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
     SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
     SDL_Color yaziRengi = {255, 255, 255, 255};
     if (mevcutDurum == OyunDurumu::ANA_MENU) {
-        string zorlukMetni;
-        if(zorlukSecimi==1) zorlukMetni= "KOLAY";
-        if(zorlukSecimi==2) zorlukMetni= "ORTA";
-        if(zorlukSecimi==3) zorlukMetni= "XOR";
-        string menuMetni = "SURE: " + to_string(sureSecimi) + "sn (1-2) | ZORLUK: " + zorlukMetni + "[A-S-D] | Whack-a-Mole -- BASLAMAK ICIN SPACE'E BASIN";
-        SDL_Surface* yuzey = TTF_RenderText_Solid(font, menuMetni.c_str(), yaziRengi);
-        SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
-        
-        SDL_Rect yaziKonum = { 1280 / 2 - yuzey->w / 2, 720 / 2 - yuzey->h / 2, yuzey->w, yuzey->h };
-        SDL_RenderCopy(renderer, doku, NULL, &yaziKonum);
-        
-        SDL_FreeSurface(yuzey);
-        SDL_DestroyTexture(doku);
+        SDL_Color beyaz = {200, 200, 200, 255};
+        SDL_Color neonMavi = {0, 255, 255, 255};
+        SDL_Color baslaRenk = {255, 50, 150, 255};
+        yaziCiz(renderer, font, "WHACK-A-MOLE", 400, 150, beyaz);
+        yaziCiz(renderer, font, "[ 30 SANIYE ]", 450, 300, (sureSecimi == 30) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ 60 SANIYE ]", 680, 300, (sureSecimi == 60) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ KOLAY ]", 350, 400, (zorlukSecimi == 1) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ORTA ]",  550, 400, (zorlukSecimi == 2) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ZOR ]",   750, 400, (zorlukSecimi == 3) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, " OYUNA BASLA ", 520, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
         for (const SDL_Rect& portal : portallar)
