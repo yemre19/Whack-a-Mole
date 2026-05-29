@@ -14,7 +14,7 @@ using namespace std;
 
 enum class OyunDurumu
 {
-    ANA_MENU,OYUN_ICI,OYUN_SONU
+    GIRIS_EKRANI,ANA_MENU,OYUN_ICI,OYUN_SONU
 };
 
 class GameManager

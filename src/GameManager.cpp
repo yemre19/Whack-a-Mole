@@ -5,7 +5,7 @@
 
 GameManager::GameManager()
 {
-    mevcutDurum = OyunDurumu::ANA_MENU;
+    mevcutDurum = OyunDurumu::GIRIS_EKRANI;
     secilenSure=30;
     secilenHiz=5;
     secilenSpawnSuresi=2000;
@@ -62,8 +62,23 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         if (etkinlik.type ==SDL_QUIT)
         {
             oyunCalisiyor=false;
+        }if (mevcutDurum==OyunDurumu::GIRIS_EKRANI)
+        {
+            if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
+            {
+                int fareX = etkinlik.button.x;
+                int fareY = etkinlik.button.y;
+
+                if (fareX >= 500 && fareX <=700 && fareY >= 500 && fareY <= 550)
+                {
+                    mevcutDurum=OyunDurumu::ANA_MENU;
+                }
+                
+            }
+            
         }
-        if (mevcutDurum== OyunDurumu::ANA_MENU)
+        
+         else if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
            if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
@@ -171,7 +186,18 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
     SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
     SDL_Color yaziRengi = {255, 255, 255, 255};
-    if (mevcutDurum == OyunDurumu::ANA_MENU) {
+    if (mevcutDurum == OyunDurumu::GIRIS_EKRANI)
+    {
+        SDL_SetRenderDrawColor(renderer,15, 15, 20,255);
+        SDL_RenderClear(renderer);
+        SDL_Color beyaz = {200, 200, 200, 255};
+        SDL_Color neonPembe = {255, 50, 150, 255};
+
+        yaziCiz(renderer, font , "WHACK-A-MOLE" , 400,250,beyaz);
+        yaziCiz(renderer, font , "OYUNA BASLA" , 520,500,neonPembe);
+    }
+    
+    else if (mevcutDurum == OyunDurumu::ANA_MENU) {
         SDL_Color beyaz = {200, 200, 200, 255};
         SDL_Color neonMavi = {0, 255, 255, 255};
         SDL_Color baslaRenk = {255, 50, 150, 255};
@@ -181,7 +207,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         yaziCiz(renderer, font, "[ KOLAY ]", 350, 400, (zorlukSecimi == 1) ? neonMavi : beyaz);
         yaziCiz(renderer, font, "[ ORTA ]",  550, 400, (zorlukSecimi == 2) ? neonMavi : beyaz);
         yaziCiz(renderer, font, "[ ZOR ]",   750, 400, (zorlukSecimi == 3) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, " OYUNA BASLA ", 520, 550, baslaRenk);
+        yaziCiz(renderer, font, " ONAYLA VE BASLA ", 520, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
         for (const SDL_Rect& portal : portallar)
