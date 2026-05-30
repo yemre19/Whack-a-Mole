@@ -48,9 +48,14 @@ int main(int argc, char* argv[])
     SDL_RenderSetLogicalSize(renderer, 1280, 720);
 
     SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/arkaplan.png");
+    //SDL_Texture* girisDokusu = IMG_LoadTexture(renderer, "assets/?.png");
+
     SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/image.png");
-    SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/nnessne.png");
-    SDL_Texture* patlamaDokusu = IMG_LoadTexture(renderer, "assets/image.png");
+    SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/1.png");
+    vector<SDL_Texture*> patlamaDokulari;
+    //patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
+    patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama2.png"));
+    patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
 
     Target hedef(0,0,250,10,false,nesne);
     
@@ -71,7 +76,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokusu,hedef,oyunFontu,portallar);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontu,portallar);
             SDL_Delay(16);
         }
     }
@@ -81,7 +86,11 @@ int main(int argc, char* argv[])
     SDL_DestroyTexture(nesneYuvasi);
     SDL_DestroyTexture(nesne);
     SDL_DestroyTexture(arkaplanDokusu);
-    SDL_DestroyTexture(patlamaDokusu);
+    for (auto doku : patlamaDokulari)
+    {
+        SDL_DestroyTexture(doku);
+    }
+    
     TTF_CloseFont(oyunFontu);
     IMG_Quit(); 
     SDL_Quit();

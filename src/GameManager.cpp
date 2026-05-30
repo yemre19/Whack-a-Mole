@@ -18,7 +18,7 @@ GameManager::GameManager()
     patlamaX = 0;
     patlamaY = 0;
     patlamaBoyut = 0;
-    patlamaSeffaf = 0;
+    //patlamaSeffaf = 0;
 }
 
 void GameManager::setDurum(OyunDurumu yeniDurum)
@@ -38,19 +38,19 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
  if (zorlukSecimi == 1)
  {
     secilenHiz = 4;
-    secilenSpawnSuresi=2000;
+    secilenSpawnSuresi=750;
  }
 
   if (zorlukSecimi == 2)
  {
     secilenHiz = 7;
-    secilenSpawnSuresi=1000;
+    secilenSpawnSuresi=500;
  }
 
   if (zorlukSecimi == 3)
  {
     secilenHiz = 11;
-    secilenSpawnSuresi=500;
+    secilenSpawnSuresi=300;
  }
  
 
@@ -130,7 +130,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                    if (suankiZaman - sonVurusZamani > 150)
                    {
                     sonVurusZamani = suankiZaman;
-                    
+
                     hedef.setDurum(false);
                     skorYoneticisi.puanEkle(10);
                     cout << "Hedef Vuruldu Skor: " << skorYoneticisi.getSkor() << endl; 
@@ -138,7 +138,9 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                     patlamaX = hedef.getX();
                     patlamaY = hedef.getY();
                     patlamaBoyut = hedef.getBoyut();
-                    patlamaSeffaf =255;
+                    patlamaFrame = 0;
+                    sonFrameZamani = SDL_GetTicks();
+                    //patlamaSeffaf =255;
                 
                    }
                    
@@ -210,7 +212,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
     }
 
-    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi,SDL_Texture* patlamaDokusu, Target& hedef, TTF_Font* font, const vector<SDL_Rect>& portallar) {
+    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi,const vector<SDL_Texture*>& patlamaDokulari, Target& hedef, TTF_Font* font, const vector<SDL_Rect>& portallar) {
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
     SDL_RenderClear(renderer);
 
@@ -248,22 +250,20 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         
         if (patlama)
         {
-            SDL_SetTextureBlendMode(patlamaDokusu, SDL_BLENDMODE_BLEND);
-            SDL_SetTextureAlphaMod(patlamaDokusu, patlamaSeffaf);
-            
-            int alan = (patlamaBoyut - 250) / 2;
-            SDL_Rect patlamaKutusu = {patlamaX - alan, patlamaY - alan, patlamaBoyut, patlamaBoyut};
-            SDL_RenderCopy(renderer, patlamaDokusu, NULL, &patlamaKutusu);
+            SDL_Rect patlamaKutusu={patlamaX,patlamaY,patlamaBoyut,patlamaBoyut};
+            SDL_RenderCopy(renderer,patlamaDokulari[patlamaFrame],NULL,&patlamaKutusu);
+            Uint32 suankiZaman = SDL_GetTicks();
 
-            patlamaBoyut += 15;
-            patlamaSeffaf -= 12;
+            if (suankiZaman - sonFrameZamani > 60) {
+            sonFrameZamani = suankiZaman;
+            patlamaFrame++;
 
-            if (patlamaSeffaf <= 0)
-            {
+            if (patlamaFrame >= patlamaDokulari.size()) {
                 patlama = false;
             }
             
         }
+    }
 
         string skorMetni = "Skor: " + to_string(skorYoneticisi.getSkor());
         
