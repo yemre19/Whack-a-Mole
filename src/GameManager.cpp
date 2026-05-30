@@ -129,10 +129,12 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
                    if (suankiZaman - sonVurusZamani > 150)
                    {
+
                     sonVurusZamani = suankiZaman;
 
                     hedef.setDurum(false);
                     skorYoneticisi.puanEkle(10);
+                    vurulanHedef++;
                     cout << "Hedef Vuruldu Skor: " << skorYoneticisi.getSkor() << endl; 
                     patlama = true;
                     patlamaX = hedef.getX();
@@ -159,8 +161,13 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         {
             if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_r)
             {
-            mevcutDurum = OyunDurumu::GIRIS_EKRANI;  
-            gecisAnim=250;
+
+                toplamHedef = 0;
+                vurulanHedef = 0;
+                skorYoneticisi.sifirla();
+                oyunBaslangicZamani = SDL_GetTicks();
+                mevcutDurum = OyunDurumu::GIRIS_EKRANI;  
+                gecisAnim=250;
             }
             
         }
@@ -191,6 +198,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
             int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h- hedef.getBoyut()/2);
             hedef.setKonum(portallar[aktifPortal].x + (portallar[aktifPortal].w / 2) - (hedef.getBoyut() / 2),baslangicY);
             hedef.setDurum(true);
+            toplamHedef++;
             sonSpawnZamani= suankiZaman;
          }
          
@@ -248,6 +256,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         }
         hedef.ciz(renderer , portallar[aktifPortal]);
         
+
         if (patlama)
         {
             SDL_Rect patlamaKutusu={patlamaX,patlamaY,patlamaBoyut,patlamaBoyut};
@@ -286,17 +295,26 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_DestroyTexture(sureDoku);
         
     }else if (mevcutDurum == OyunDurumu::OYUN_SONU) {
-        string sonMetin = "Sure bitti Skor: " + to_string(skorYoneticisi.getSkor()) + " - Menu icin r ye basin";
-        SDL_Surface* yuzey = TTF_RenderText_Solid(font, sonMetin.c_str(), yaziRengi);
-        SDL_Texture* doku = SDL_CreateTextureFromSurface(renderer, yuzey);
-        
-        SDL_Rect yaziKonum = { 1280 / 2 - yuzey->w / 2, 720 / 2 - yuzey->h / 2, yuzey->w, yuzey->h };
-        SDL_RenderCopy(renderer, doku, NULL, &yaziKonum);
-        
-        SDL_FreeSurface(yuzey);
-        SDL_DestroyTexture(doku);
-    }
+        SDL_Color beyaz = {200, 200, 200, 255};
+        SDL_Color neonMavi = {0, 255, 255, 255};
 
+        int basariYuzde = 0;
+        if (toplamHedef > 0)
+        {
+           basariYuzde = (vurulanHedef * 100) / toplamHedef;
+        }
+        
+        string skorMetni = "TOPLAM SKOR: " + to_string(skorYoneticisi.getSkor());
+        string isabetOrani = "ISABET ORANI: " + to_string(vurulanHedef) + " / " + to_string(toplamHedef);
+        string  yuzde = "BASARI YUZDESI: %" + to_string(basariYuzde);
+
+        yaziCiz(renderer,font , "SURE BITTI",400,400,beyaz);
+        yaziCiz(renderer, font, skorMetni, 450, 300, neonMavi);
+        yaziCiz(renderer, font, isabetOrani, 450, 350, neonMavi);
+        yaziCiz(renderer,font, yuzde , 450,400,neonMavi);
+        yaziCiz(renderer, font, "Ana menu icin 'R' tusuna basin", 420, 550, beyaz);
+
+ }
     if (gecisAnim > 0)
     {
         SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
@@ -310,5 +328,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
     }
     
 
+ 
     SDL_RenderPresent(renderer);
 }
+

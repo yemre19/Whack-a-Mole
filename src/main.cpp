@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/image.png");
     SDL_Texture* nesne = IMG_LoadTexture(renderer, "assets/1.png");
     vector<SDL_Texture*> patlamaDokulari;
-    //patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
+    patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama2.png"));
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
 

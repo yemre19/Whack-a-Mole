@@ -56,6 +56,9 @@ private:
  Uint32 sonFrameZamani;
  //int patlamaSeffaf;
 
+ int toplamHedef;
+ int vurulanHedef;
+
 };
 
 #endif
