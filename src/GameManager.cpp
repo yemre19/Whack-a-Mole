@@ -19,6 +19,8 @@ GameManager::GameManager()
     patlamaY = 0;
     patlamaBoyut = 0;
     //patlamaSeffaf = 0;
+    mevcutSeri=0;
+    enYuksekSeri=0;
 }
 
 void GameManager::setDurum(OyunDurumu yeniDurum)
@@ -65,6 +67,8 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
  skorYoneticisi.sifirla();
 
  toplamHedef=0;
+ mevcutSeri=0;
+ enYuksekSeri=0;
  vurulanHedef=0;
 
 }
@@ -147,7 +151,10 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                 int mouseY = etkinlik.button.y;
                 int delikOrtaY = portallar[aktifPortal].y + (portallar[aktifPortal].h / 2);
 
-                if (hedef.getDurum() == true && hedef.tiklandiMi(mouseX,mouseY) && mouseY < delikOrtaY)
+
+                if(hedef.getDurum() == true)
+                {
+                if (hedef.tiklandiMi(mouseX,mouseY) && mouseY < delikOrtaY)
                 {
                    static Uint32 sonVurusZamani = 0;
                    Uint32 suankiZaman = SDL_GetTicks();
@@ -163,23 +170,29 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                     skorYoneticisi.puanEkle(10);
                     vurulanHedef++;
                     cout << "Hedef Vuruldu Skor: " << skorYoneticisi.getSkor() << endl; 
+                    //patlamaSeffaf =255;
+                    mevcutSeri++;
+                    if (mevcutSeri > enYuksekSeri)
+                    {
+                        enYuksekSeri=mevcutSeri;
+                    }
+                    
+                    
                     patlama = true;
                     patlamaX = hedef.getX();
                     patlamaY = hedef.getY();
                     patlamaBoyut = hedef.getBoyut();
                     patlamaFrame = 0;
                     sonFrameZamani = SDL_GetTicks();
-                    //patlamaSeffaf =255;
-                
-                   }
-                   
-
-
-                   
-                   
                 }
-                
+                   
+
             }
+                   
+                   
+       }
+                
+   }
         
             
         }
@@ -220,14 +233,19 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
          }
          
          if (!hedef.getDurum() || (suankiZaman - sonSpawnZamani > secilenSpawnSuresi))
+          {
+          if (hedef.getDurum() && (suankiZaman - sonSpawnZamani > secilenSpawnSuresi))
          {
-            aktifPortal = rand() %  portallar.size();
-            int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h- hedef.getBoyut()/2);
-            hedef.setKonum(portallar[aktifPortal].x + (portallar[aktifPortal].w / 2) - (hedef.getBoyut() / 2),baslangicY);
-            hedef.setDurum(true);
-            toplamHedef++;
-            sonSpawnZamani= suankiZaman;
+          mevcutSeri = 0;  
          }
+     
+       aktifPortal = rand() % portallar.size();
+       int baslangicY = portallar[aktifPortal].y + (portallar[aktifPortal].h - hedef.getBoyut()/2);
+         hedef.setKonum(portallar[aktifPortal].x + (portallar[aktifPortal].w / 2) - (hedef.getBoyut() / 2), baslangicY);
+         hedef.setDurum(true);
+         toplamHedef++;
+         sonSpawnZamani = suankiZaman;
+         } 
          
          if (hedef.getDurum() && hedef.getY() > portallar[aktifPortal].y - 100)
          {
@@ -321,6 +339,14 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_RenderCopy(renderer, sureDoku, NULL, &sureKonum);
         SDL_FreeSurface(sureYuzey);
         SDL_DestroyTexture(sureDoku);
+
+        string seriMetni = "Seri: " + to_string(mevcutSeri);
+        SDL_Surface* seriYuzey = TTF_RenderText_Solid(oyunFontuKucuk, seriMetni.c_str(), yaziRengi);
+        SDL_Texture* seriDoku = SDL_CreateTextureFromSurface(renderer, seriYuzey);
+        SDL_Rect seriKonum = {20, 100, seriYuzey->w, seriYuzey->h};
+        SDL_RenderCopy(renderer, seriDoku, NULL, &seriKonum);
+        SDL_FreeSurface(seriYuzey);
+        SDL_DestroyTexture(seriDoku);
         
     }else if (mevcutDurum == OyunDurumu::OYUN_SONU) {
         SDL_Color beyaz = {200, 200, 200, 255};
@@ -335,11 +361,13 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         string skorMetni = "TOPLAM SKOR: " + to_string(skorYoneticisi.getSkor());
         string isabetOrani = "ISABET ORANI: " + to_string(vurulanHedef) + " / " + to_string(toplamHedef);
         string  yuzde = "BASARI YUZDESI: %" + to_string(basariYuzde);
+        string  seri = "En uzun ser: " + to_string(enYuksekSeri);
 
         yaziCiz(renderer,oyunFontuBuyuk , "SURE BITI",430,150,beyaz);
         yaziCiz(renderer, oyunFontuKucuk, skorMetni, 450, 300, neonMavi);
         yaziCiz(renderer, oyunFontuKucuk, isabetOrani, 450, 360, neonMavi);
         yaziCiz(renderer,oyunFontuKucuk, yuzde , 450,420,neonMavi);
+        yaziCiz(renderer,oyunFontuKucuk, seri , 450,480,neonMavi);
         yaziCiz(renderer, oyunFontuKucuk, "Ana menu icin 'BACKSPACE' tusuna basin", 380, 580, beyaz);
         yaziCiz(renderer, oyunFontuKucuk, "Oyundan cikmak icin 'ESC' tusuna basin", 380, 620, beyaz);
 

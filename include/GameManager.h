@@ -59,6 +59,9 @@ private:
  int toplamHedef;
  int vurulanHedef;
 
+ int mevcutSeri;
+ int enYuksekSeri;
+
 };
 
 #endif
