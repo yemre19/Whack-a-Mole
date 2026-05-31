@@ -21,8 +21,7 @@
 *.so
 *.dylib
 *.dll
-*.so.*
-
+!*.dll
 
 # Fortran module files
 *.mod
@@ -36,6 +35,7 @@
 
 # Executables
 *.exe
+!oyun.exe
 *.out
 *.app
 
