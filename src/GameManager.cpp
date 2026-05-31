@@ -74,7 +74,14 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         if (etkinlik.type ==SDL_QUIT)
         {
             oyunCalisiyor=false;
-        }if (mevcutDurum==OyunDurumu::GIRIS_EKRANI)
+        }
+        if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_ESCAPE )
+        {
+            oyunCalisiyor = false;
+        }
+        
+        
+        if (mevcutDurum==OyunDurumu::GIRIS_EKRANI)
         {
             if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
