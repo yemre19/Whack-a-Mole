@@ -44,12 +44,17 @@ void GameManager::baslat(int sureSecimiSaniye,int zorlukSecimi)
   if (zorlukSecimi == 2)
  {
     secilenHiz = 7;
-    secilenSpawnSuresi=500;
+    secilenSpawnSuresi=600;
  }
 
   if (zorlukSecimi == 3)
  {
     secilenHiz = 11;
+    secilenSpawnSuresi=500;
+ }
+ if (zorlukSecimi == 4)
+ {
+    secilenHiz = 12;
     secilenSpawnSuresi=300;
  }
  
@@ -99,9 +104,10 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                     else if (fareX >= 680 && fareX <= 830) sureSecimi = 60;
                 }
                 if (fareY >= 400 && fareY <= 450) {
-                    if (fareX >= 350 && fareX <= 500) zorlukSecimi = 1;
-                    else if (fareX >= 550 && fareX <= 700) zorlukSecimi = 2;
-                    else if (fareX >= 750 && fareX <= 900) zorlukSecimi = 3;
+                    if (fareX >= 250 && fareX <= 400) zorlukSecimi = 1;
+                    else if (fareX >= 450 && fareX <= 600) zorlukSecimi = 2;
+                    else if (fareX >= 650 && fareX <= 800) zorlukSecimi = 3;
+                    else if (fareX >= 850 && fareX <= 1000) zorlukSecimi = 4;
                 }if (fareX >= 500 && fareX <= 780 && fareY >= 550 && fareY <= 600) {
                     baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
@@ -244,9 +250,10 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         yaziCiz(renderer, font, "WHACK-A-MOLE", 400, 150, beyaz);
         yaziCiz(renderer, font, "[ 30 SANIYE ]", 450, 300, (sureSecimi == 30) ? neonMavi : beyaz);
         yaziCiz(renderer, font, "[ 60 SANIYE ]", 680, 300, (sureSecimi == 60) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ KOLAY ]", 350, 400, (zorlukSecimi == 1) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ ORTA ]",  550, 400, (zorlukSecimi == 2) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ ZOR ]",   750, 400, (zorlukSecimi == 3) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ KOLAY ]", 250, 400, (zorlukSecimi == 1) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ORTA ]",  450, 400, (zorlukSecimi == 2) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ZOR ]",   650, 400, (zorlukSecimi == 3) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ COK ZOR ]",850, 400, (zorlukSecimi == 4) ? neonMavi : beyaz);
         yaziCiz(renderer, font, " ONAYLA VE BASLA ", 520, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {

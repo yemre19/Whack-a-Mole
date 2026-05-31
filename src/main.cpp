@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_RenderSetLogicalSize(renderer, 1280, 720);
 
-    SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/arkaplan.png");
+    SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/resm.png");
     //SDL_Texture* girisDokusu = IMG_LoadTexture(renderer, "assets/?.png");
 
     SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/image.png");
@@ -55,15 +55,15 @@ int main(int argc, char* argv[])
     vector<SDL_Texture*> patlamaDokulari;
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama2.png"));
-    patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
+   // patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
 
-    Target hedef(0,0,250,10,false,nesne);
+    Target hedef(0,0,220,10,false,nesne);
     
      
     vector<SDL_Rect> portallar = {
-   {150, 120, 250, 100}, {515, 120, 250, 100}, {880, 120, 250, 100},
-   {150, 320, 250, 100}, {515, 320, 250, 100}, {880, 320, 250, 100},
-   {150, 520, 250, 100}, {515, 520, 250, 100}, {880, 520, 250, 100}
+   {210, 120, 220, 100}, {515, 120, 220, 100}, {820, 120, 220, 100},
+   {180, 320, 220, 100}, {515, 320, 220, 100}, {850, 320, 220, 100},
+   {140, 520, 220, 100}, {515, 520, 220, 100}, {890, 520, 220, 100}
     };
 
     GameManager oyunYoneticisi;
