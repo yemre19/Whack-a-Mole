@@ -368,18 +368,28 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
            basariYuzde = (vurulanHedef * 100) / toplamHedef;
         }
         
-        string skorMetni = "TOPLAM SKOR: " + to_string(skorYoneticisi.getSkor());
-        string isabetOrani = "ISABET ORANI: " + to_string(vurulanHedef) + " / " + to_string(toplamHedef);
-        string  yuzde = "BASARI YUZDESI: %" + to_string(basariYuzde);
-        string  seri = "En uzun ser: " + to_string(enYuksekSeri);
+        string skorMetni = "Toplam Skor: " + to_string(skorYoneticisi.getSkor());
+        string isabetOrani = "Isabet Orani: " + to_string(vurulanHedef) + " / " + to_string(toplamHedef);
+        string  yuzde = "Basari Yuzdesi: %" + to_string(basariYuzde);
+        string  seri = "En Uzun Seri: " + to_string(enYuksekSeri);
 
-        yaziCiz(renderer,oyunFontuBuyuk , "SURE BITI",430,150,beyaz);
-        yaziCiz(renderer, oyunFontuKucuk, skorMetni, 450, 300, neonMavi);
-        yaziCiz(renderer, oyunFontuKucuk, isabetOrani, 450, 360, neonMavi);
-        yaziCiz(renderer,oyunFontuKucuk, yuzde , 450,420,neonMavi);
-        yaziCiz(renderer,oyunFontuKucuk, seri , 450,480,neonMavi);
-        yaziCiz(renderer, oyunFontuKucuk, "Ana menu icin 'BACKSPACE' tusuna basin", 380, 580, beyaz);
-        yaziCiz(renderer, oyunFontuKucuk, "Oyundan cikmak icin 'ESC' tusuna basin", 380, 620, beyaz);
+        int w;
+        int h;
+
+        TTF_SizeText(oyunFontuBuyuk, "SURE BITTI", &w, &h);
+        yaziCiz(renderer, oyunFontuBuyuk, "SURE BITTI", (1280 - w) / 2, 150, beyaz);
+        TTF_SizeText(oyunFontuKucuk, skorMetni.c_str(), &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, skorMetni, (1280 - w) / 2, 300, neonMavi);
+        TTF_SizeText(oyunFontuKucuk, isabetOrani.c_str(), &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, isabetOrani, (1280 - w) / 2, 360, neonMavi);
+        TTF_SizeText(oyunFontuKucuk, yuzde.c_str(), &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, yuzde, (1280 - w) / 2, 420, neonMavi);
+        TTF_SizeText(oyunFontuKucuk, seri.c_str(), &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, seri, (1280 - w) / 2, 480, neonMavi);
+        TTF_SizeText(oyunFontuKucuk, "Ana menu icin 'BACKSPACE' tusuna basin", &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, "Ana menu icin 'BACKSPACE' tusuna basin", (1280 - w) / 2, 580, beyaz);
+        TTF_SizeText(oyunFontuKucuk, "Oyundan cikmak icin 'ESC' tusuna basin", &w, &h);
+        yaziCiz(renderer, oyunFontuKucuk, "Oyundan cikmak icin 'ESC' tusuna basin", (1280 - w) / 2, 620, beyaz);
 
  }
     if (gecisAnim > 0)
