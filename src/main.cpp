@@ -32,8 +32,10 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    TTF_Font* oyunFontu = TTF_OpenFont("assets/font.otf",28 );
-    if (oyunFontu == nullptr)
+    TTF_Font* oyunFontuBuyuk = TTF_OpenFont("assets/font3.ttf",64 );
+    TTF_Font* oyunFontuOrta = TTF_OpenFont("assets/font3.ttf",36 );
+    TTF_Font* oyunFontuKucuk = TTF_OpenFont("assets/font3.ttf",24 );
+    if (!oyunFontuBuyuk || !oyunFontuOrta || !oyunFontuKucuk)
     {
       cout << "Font yuklenemedi Hata: " << TTF_GetError() << endl ;
     }
@@ -76,7 +78,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontu,portallar);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,portallar);
             SDL_Delay(16);
         }
     }
@@ -91,7 +93,9 @@ int main(int argc, char* argv[])
         SDL_DestroyTexture(doku);
     }
     
-    TTF_CloseFont(oyunFontu);
+    TTF_CloseFont(oyunFontuBuyuk);
+    TTF_CloseFont(oyunFontuOrta);
+    TTF_CloseFont(oyunFontuKucuk);
     IMG_Quit(); 
     SDL_Quit();
     TTF_Quit();
