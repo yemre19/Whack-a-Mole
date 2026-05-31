@@ -58,8 +58,19 @@ int main(int argc, char* argv[])
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama2.png"));
    // patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
-    SDL_Texture* imlecGorseli = IMG_LoadTexture(renderer, "assets/imlec.png");
-    SDL_ShowCursor(SDL_DISABLE);
+    SDL_Surface* imlecGorseli = IMG_Load("assets/imlec2.png");
+    SDL_Cursor* ozelImlec = nullptr;
+
+    if (imlecGorseli != nullptr)
+    {
+        int merkezX = imlecGorseli->w /2 ;
+        int merkezY = imlecGorseli->h /2 ;
+
+        ozelImlec = SDL_CreateColorCursor(imlecGorseli,merkezX,merkezY);
+        SDL_SetCursor(ozelImlec);
+        SDL_FreeSurface(imlecGorseli);
+    }
+    
 
     Target hedef(0,0,220,10,false,nesne);
     
@@ -80,7 +91,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,imlecGorseli,portallar);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,portallar);
             SDL_Delay(16);
         }
     }
@@ -94,7 +105,7 @@ int main(int argc, char* argv[])
     {
         SDL_DestroyTexture(doku);
     }
-    SDL_DestroyTexture(imlecGorseli);
+    if(ozelImlec) SDL_FreeCursor(ozelImlec);
     
     TTF_CloseFont(oyunFontuBuyuk);
     TTF_CloseFont(oyunFontuOrta);

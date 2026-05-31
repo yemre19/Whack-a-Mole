@@ -275,7 +275,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
     }
 
-    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi,const vector<SDL_Texture*>& patlamaDokulari, Target& hedef, TTF_Font* oyunFontuBuyuk ,TTF_Font* oyunFontuOrta,TTF_Font* oyunFontuKucuk,SDL_Texture* imlecGorseli, const vector<SDL_Rect>& portallar) {
+    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi,const vector<SDL_Texture*>& patlamaDokulari, Target& hedef, TTF_Font* oyunFontuBuyuk ,TTF_Font* oyunFontuOrta,TTF_Font* oyunFontuKucuk,const vector<SDL_Rect>& portallar) {
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
     SDL_RenderClear(renderer);
 
@@ -394,23 +394,6 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         if (gecisAnim < 0) gecisAnim = 0;
     }
     
-    if (imlecGorseli != nullptr)
-    {
-        int yeniBoyut = 40;
-        SDL_Rect imlecKonum = {
-            fX - (yeniBoyut / 2), 
-            fY - (yeniBoyut / 2),
-            yeniBoyut, 
-            yeniBoyut
-            
-        };
-
-        SDL_RenderCopy(renderer, imlecGorseli,nullptr,&imlecKonum);
-    }
-
-
-    
-
  
     SDL_RenderPresent(renderer);
 }
