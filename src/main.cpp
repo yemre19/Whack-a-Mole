@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
     SDL_RenderSetLogicalSize(renderer, 1280, 720);
 
     SDL_Texture* arkaplanDokusu = IMG_LoadTexture(renderer, "assets/resm.png");
+    SDL_Texture* menuArkaplan = IMG_LoadTexture(renderer, "assets/menu.png");
     //SDL_Texture* girisDokusu = IMG_LoadTexture(renderer, "assets/?.png");
 
     SDL_Texture* nesneYuvasi = IMG_LoadTexture(renderer, "assets/image.png");
@@ -91,7 +92,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,portallar);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,menuArkaplan,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,portallar);
             SDL_Delay(16);
         }
     }
@@ -101,6 +102,7 @@ int main(int argc, char* argv[])
     SDL_DestroyTexture(nesneYuvasi);
     SDL_DestroyTexture(nesne);
     SDL_DestroyTexture(arkaplanDokusu);
+    SDL_DestroyTexture(menuArkaplan);
     for (auto doku : patlamaDokulari)
     {
         SDL_DestroyTexture(doku);

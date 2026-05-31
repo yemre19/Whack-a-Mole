@@ -275,11 +275,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
 
     }
 
-    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan, SDL_Texture* portalResmi,const vector<SDL_Texture*>& patlamaDokulari, Target& hedef, TTF_Font* oyunFontuBuyuk ,TTF_Font* oyunFontuOrta,TTF_Font* oyunFontuKucuk,const vector<SDL_Rect>& portallar) {
+    void GameManager::ciz(SDL_Renderer* renderer, SDL_Texture* arkaplan,SDL_Texture* menuArkaplan, SDL_Texture* portalResmi,const vector<SDL_Texture*>& patlamaDokulari, Target& hedef, TTF_Font* oyunFontuBuyuk ,TTF_Font* oyunFontuOrta,TTF_Font* oyunFontuKucuk,const vector<SDL_Rect>& portallar) {
     SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
     SDL_RenderClear(renderer);
 
-    SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
+    
     SDL_Color yaziRengi = {255, 255, 255, 255};
     if (mevcutDurum == OyunDurumu::GIRIS_EKRANI)
     {
@@ -293,6 +293,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
     }
     
     else if (mevcutDurum == OyunDurumu::ANA_MENU) {
+        SDL_RenderCopy(renderer, menuArkaplan, NULL, NULL);
         SDL_Color beyaz = {200, 200, 200, 255};
         SDL_Color neonMavi = {0, 255, 255, 255};
         SDL_Color baslaRenk = {255, 50, 150, 255};
@@ -306,6 +307,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         yaziCiz(renderer, oyunFontuOrta, " ONAYLA VE BASLA ", 480, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
+        SDL_RenderCopy(renderer, arkaplan, NULL, NULL);
         for (const SDL_Rect& portal : portallar)
         {
             SDL_RenderCopy(renderer,portalResmi,nullptr,&portal);
@@ -359,6 +361,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_DestroyTexture(seriDoku);
         
     }else if (mevcutDurum == OyunDurumu::OYUN_SONU) {
+        SDL_RenderCopy(renderer, menuArkaplan, NULL, NULL);
         SDL_Color beyaz = {200, 200, 200, 255};
         SDL_Color neonMavi = {0, 255, 255, 255};
 
