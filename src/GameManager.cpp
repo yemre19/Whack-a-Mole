@@ -183,7 +183,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         
         else if (mevcutDurum == OyunDurumu::OYUN_SONU)
         {
-            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_r)
+            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym==SDLK_BACKSPACE)
             {
 
                 toplamHedef = 0;
@@ -258,7 +258,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_Color neonPembe = {255, 50, 150, 255};
 
         yaziCiz(renderer, font , "WHACK-A-MOLE" , 520,250,beyaz);
-        yaziCiz(renderer, font , "OYUNA BASLAMAK ICIN 'SPACE' TUSUNA BASIN", 350,500,neonPembe);
+        yaziCiz(renderer, font , "Oyuna baslamak icin 'SPACE' tusuna basin", 350,500,neonPembe);
     }
     
     else if (mevcutDurum == OyunDurumu::ANA_MENU) {
@@ -337,7 +337,7 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         yaziCiz(renderer, font, skorMetni, 530, 300, neonMavi);
         yaziCiz(renderer, font, isabetOrani, 530, 360, neonMavi);
         yaziCiz(renderer,font, yuzde , 530,420,neonMavi);
-        yaziCiz(renderer, font, "Ana menu icin 'R' tusuna basin", 440, 580, beyaz);
+        yaziCiz(renderer, font, "Ana menu icin 'BACKSPACE' tusuna basin", 380, 580, beyaz);
 
  }
     if (gecisAnim > 0)
