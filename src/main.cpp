@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 
     srand(time(0));
     
-    cout << "Karanlik tema refleks oyunu basliyor..." << endl;
+    cout << "Refleks oyunu basliyor..." << endl;
     
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Oyun motoru baslatilamadi! Hata: " << SDL_GetError() << endl;

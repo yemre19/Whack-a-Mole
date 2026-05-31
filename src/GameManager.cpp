@@ -83,39 +83,41 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         
         if (mevcutDurum==OyunDurumu::GIRIS_EKRANI)
         {
-            if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
+            if ((etkinlik.type== SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_SPACE)  || (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT))
             {
-                int fareX = etkinlik.button.x;
-                int fareY = etkinlik.button.y;
-
-                if (fareX >= 500 && fareX <=700 && fareY >= 500 && fareY <= 550)
-                {
+               
                     mevcutDurum=OyunDurumu::ANA_MENU;
                     gecisAnim=250;
                     
-                }
-                
+              
             }
             
         }
         
          else if (mevcutDurum== OyunDurumu::ANA_MENU)
         {
-           if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
+
+            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_BACKSPACE)
+            {
+                mevcutDurum = OyunDurumu::GIRIS_EKRANI;
+                gecisAnim=255;
+            }
+            
+           else if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
                 int fareX = etkinlik.button.x;
                 int fareY = etkinlik.button.y;
 
-                if (fareY >= 300 && fareY <= 350) {
-                    if (fareX >= 450 && fareX <= 600) sureSecimi = 30;
-                    else if (fareX >= 680 && fareX <= 830) sureSecimi = 60;
+                if (fareY >= 230 && fareY <= 300) {
+                    if (fareX >= 430 && fareX <= 580) sureSecimi = 30;
+                    else if (fareX >= 660 && fareX <= 810) sureSecimi = 60;
                 }
-                if (fareY >= 400 && fareY <= 450) {
-                    if (fareX >= 250 && fareX <= 400) zorlukSecimi = 1;
-                    else if (fareX >= 450 && fareX <= 600) zorlukSecimi = 2;
-                    else if (fareX >= 650 && fareX <= 800) zorlukSecimi = 3;
-                    else if (fareX >= 850 && fareX <= 1000) zorlukSecimi = 4;
-                }if (fareX >= 500 && fareX <= 780 && fareY >= 550 && fareY <= 600) {
+                if (fareY >= 360 && fareY <= 420) {
+                    if (fareX >= 300 && fareX <= 450) zorlukSecimi = 1;
+                    else if (fareX >= 480 && fareX <= 630) zorlukSecimi = 2;
+                    else if (fareX >= 660 && fareX <= 810) zorlukSecimi = 3;
+                    else if (fareX >= 840 && fareX <= 990) zorlukSecimi = 4;
+                }if (fareX >= 500 && fareX <= 750 && fareY >= 530 && fareY <= 600) {
                     baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
                     gecisAnim=250;
@@ -127,7 +129,16 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
             
         }else if (mevcutDurum==OyunDurumu::OYUN_ICI)
         {
-            if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
+
+            if (etkinlik.type == SDL_KEYDOWN && etkinlik.key.keysym.sym == SDLK_BACKSPACE)
+            {
+                mevcutDurum = OyunDurumu::ANA_MENU;
+                gecisAnim = 255;
+                hedef.setDurum(false);
+                patlama=false;
+            }
+            
+            else if (etkinlik.type == SDL_MOUSEBUTTONDOWN && etkinlik.button.button == SDL_BUTTON_LEFT)
             {
                 int mouseX = etkinlik.button.x;
                 int mouseY = etkinlik.button.y;
@@ -246,22 +257,22 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         SDL_Color beyaz = {200, 200, 200, 255};
         SDL_Color neonPembe = {255, 50, 150, 255};
 
-        yaziCiz(renderer, font , "WHACK-A-MOLE" , 400,250,beyaz);
-        yaziCiz(renderer, font , "OYUNA BASLA" , 520,500,neonPembe);
+        yaziCiz(renderer, font , "WHACK-A-MOLE" , 520,250,beyaz);
+        yaziCiz(renderer, font , "OYUNA BASLAMAK ICIN 'SPACE' TUSUNA BASIN", 350,500,neonPembe);
     }
     
     else if (mevcutDurum == OyunDurumu::ANA_MENU) {
         SDL_Color beyaz = {200, 200, 200, 255};
         SDL_Color neonMavi = {0, 255, 255, 255};
         SDL_Color baslaRenk = {255, 50, 150, 255};
-        yaziCiz(renderer, font, "WHACK-A-MOLE", 400, 150, beyaz);
-        yaziCiz(renderer, font, "[ 30 SANIYE ]", 450, 300, (sureSecimi == 30) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ 60 SANIYE ]", 680, 300, (sureSecimi == 60) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ KOLAY ]", 250, 400, (zorlukSecimi == 1) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ ORTA ]",  450, 400, (zorlukSecimi == 2) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ ZOR ]",   650, 400, (zorlukSecimi == 3) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, "[ COK ZOR ]",850, 400, (zorlukSecimi == 4) ? neonMavi : beyaz);
-        yaziCiz(renderer, font, " ONAYLA VE BASLA ", 520, 550, baslaRenk);
+        yaziCiz(renderer, font, "WHACK-A-MOLE", 520, 100, beyaz);
+        yaziCiz(renderer, font, "[ 30 SANIYE ]", 450, 250, (sureSecimi == 30) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ 60 SANIYE ]", 680, 250, (sureSecimi == 60) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ KOLAY ]", 320,380, (zorlukSecimi == 1) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ORTA ]",  500, 380, (zorlukSecimi == 2) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ ZOR ]",   680, 380, (zorlukSecimi == 3) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, "[ COK ZOR ]",860, 380, (zorlukSecimi == 4) ? neonMavi : beyaz);
+        yaziCiz(renderer, font, " ONAYLA VE BASLA ", 530, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
         for (const SDL_Rect& portal : portallar)
@@ -287,12 +298,12 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
             
         }
     }
-
-        string skorMetni = "Skor: " + to_string(skorYoneticisi.getSkor());
-        
+    
         int kalanSaniye = (secilenSure - (SDL_GetTicks() - oyunBaslangicZamani)) / 1000;
         if (kalanSaniye < 0) kalanSaniye = 0;
         string sureMetni = "Sure: " + to_string(kalanSaniye);
+        string skorMetni = "Skor: " + to_string(skorYoneticisi.getSkor());
+        
 
         SDL_Surface* skorYuzey = TTF_RenderText_Solid(font, skorMetni.c_str(), yaziRengi);
         SDL_Texture* skorDoku = SDL_CreateTextureFromSurface(renderer, skorYuzey);
@@ -322,11 +333,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         string isabetOrani = "ISABET ORANI: " + to_string(vurulanHedef) + " / " + to_string(toplamHedef);
         string  yuzde = "BASARI YUZDESI: %" + to_string(basariYuzde);
 
-        yaziCiz(renderer,font , "SURE BITTI",400,400,beyaz);
-        yaziCiz(renderer, font, skorMetni, 450, 300, neonMavi);
-        yaziCiz(renderer, font, isabetOrani, 450, 350, neonMavi);
-        yaziCiz(renderer,font, yuzde , 450,400,neonMavi);
-        yaziCiz(renderer, font, "Ana menu icin 'R' tusuna basin", 420, 550, beyaz);
+        yaziCiz(renderer,font , "SURE BITTI",550,150,beyaz);
+        yaziCiz(renderer, font, skorMetni, 530, 300, neonMavi);
+        yaziCiz(renderer, font, isabetOrani, 530, 360, neonMavi);
+        yaziCiz(renderer,font, yuzde , 530,420,neonMavi);
+        yaziCiz(renderer, font, "Ana menu icin 'R' tusuna basin", 440, 580, beyaz);
 
  }
     if (gecisAnim > 0)
