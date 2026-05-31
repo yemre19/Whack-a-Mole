@@ -116,11 +116,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
                     else if (fareX >= 680 && fareX <= 970) sureSecimi = 60;
                 }
                 if (fareY >= 360 && fareY <= 440) {
-                    if (fareX >= 130 && fareX <= 350) zorlukSecimi = 1;
-                    else if (fareX >= 380 && fareX <= 670) zorlukSecimi = 2;
-                    else if (fareX >= 630 && fareX <= 820) zorlukSecimi = 3;
-                    else if (fareX >= 880 && fareX <= 1100) zorlukSecimi = 4;
-                }if ((fareX >= 530 && fareX <= 610) && (fareY >= 440 && fareY <= 860)) {
+                    if (fareX >= 170 && fareX <= 360) zorlukSecimi = 1;
+                    else if (fareX >= 410 && fareX <= 580) zorlukSecimi = 2;
+                    else if (fareX >= 650 && fareX <= 820) zorlukSecimi = 3;
+                    else if (fareX >= 870 && fareX <= 1120) zorlukSecimi = 4;
+                }if ((fareX >= 500 && fareX <= 820) && (fareY >= 530 && fareY <= 610)) {
                     baslat(sureSecimi, zorlukSecimi);
                     hedef.setDurum(false);
                     gecisAnim=250;
@@ -271,11 +271,11 @@ void GameManager::etkinlikleriGozlemle(SDL_Event& etkinlik, bool& oyunCalisiyor,
         yaziCiz(renderer, oyunFontuBuyuk, "WHACK-A-MOLE", 400, 100, beyaz);
         yaziCiz(renderer, oyunFontuOrta, "[ 30 SANIYE ]", 350, 250, (sureSecimi == 30) ? neonMavi : beyaz);
         yaziCiz(renderer, oyunFontuOrta, "[ 60 SANIYE ]", 700, 250, (sureSecimi == 60) ? neonMavi : beyaz);
-        yaziCiz(renderer, oyunFontuOrta, "[ KOLAY ]", 150,380, (zorlukSecimi == 1) ? neonMavi : beyaz);
-        yaziCiz(renderer, oyunFontuOrta, "[ ORTA ]",  400, 380, (zorlukSecimi == 2) ? neonMavi : beyaz);
-        yaziCiz(renderer, oyunFontuOrta, "[ ZOR ]",   650, 380, (zorlukSecimi == 3) ? neonMavi : beyaz);
-        yaziCiz(renderer, oyunFontuOrta, "[ COK ZOR ]",900, 380, (zorlukSecimi == 4) ? neonMavi : beyaz);
-        yaziCiz(renderer, oyunFontuOrta, " ONAYLA VE BASLA ", 460, 550, baslaRenk);
+        yaziCiz(renderer, oyunFontuOrta, "[ KOLAY ]", 180,380, (zorlukSecimi == 1) ? neonMavi : beyaz);
+        yaziCiz(renderer, oyunFontuOrta, "[ ORTA ]",  420, 380, (zorlukSecimi == 2) ? neonMavi : beyaz);
+        yaziCiz(renderer, oyunFontuOrta, "[ ZOR ]",   660, 380, (zorlukSecimi == 3) ? neonMavi : beyaz);
+        yaziCiz(renderer, oyunFontuOrta, "[ COK ZOR ]",880, 380, (zorlukSecimi == 4) ? neonMavi : beyaz);
+        yaziCiz(renderer, oyunFontuOrta, " ONAYLA VE BASLA ", 480, 550, baslaRenk);
     }
     else if (mevcutDurum == OyunDurumu::OYUN_ICI) {
         for (const SDL_Rect& portal : portallar)
