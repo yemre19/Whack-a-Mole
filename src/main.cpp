@@ -58,6 +58,8 @@ int main(int argc, char* argv[])
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama1.png"));
     patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama2.png"));
    // patlamaDokulari.push_back(IMG_LoadTexture(renderer, "assets/patlama3.png"));
+    SDL_Texture* imlecGorseli = IMG_LoadTexture(renderer, "assets/imlec.png");
+    SDL_ShowCursor(SDL_DISABLE);
 
     Target hedef(0,0,220,10,false,nesne);
     
@@ -78,7 +80,7 @@ int main(int argc, char* argv[])
         {
             oyunYoneticisi.etkinlikleriGozlemle(etkinlik, oyunCalisiyor, hedef, portallar);
             oyunYoneticisi.guncelle(portallar, hedef);
-            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,portallar);
+            oyunYoneticisi.ciz(renderer,arkaplanDokusu,nesneYuvasi,patlamaDokulari,hedef,oyunFontuBuyuk,oyunFontuOrta,oyunFontuKucuk,imlecGorseli,portallar);
             SDL_Delay(16);
         }
     }
@@ -92,6 +94,7 @@ int main(int argc, char* argv[])
     {
         SDL_DestroyTexture(doku);
     }
+    SDL_DestroyTexture(imlecGorseli);
     
     TTF_CloseFont(oyunFontuBuyuk);
     TTF_CloseFont(oyunFontuOrta);
